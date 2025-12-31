@@ -14,4 +14,20 @@ The following secrets must be configured in this repository:
 - **Namespace:** `default`
 - **Service Name:** `elasticsearch-service`
 - **Port:** `9200`
-- **Configuration:** Single-node, security disabled (for internal dev cluster use).
+- **Configuration:** Single-node, security **ENABLED**.
+  - Authentication handled via `elasticsearch-secrets`.
+  - Default password: `cr-api-secure-elastic-2025` (managed via scripts).
+
+## Setup
+
+Before deploying, ensure the secrets are created in the cluster:
+
+**PowerShell:**
+```powershell
+.\scripts\setup-secrets.ps1
+```
+
+**Bash:**
+```bash
+./scripts/setup-secrets.sh
+```

@@ -1,4 +1,4 @@
-﻿apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: elasticsearch
@@ -22,6 +22,11 @@ spec:
           value: single-node
         - name: xpack.security.enabled
           value: "true"
+        - name: ELASTIC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elasticsearch-secrets
+              key: ELASTIC_PASSWORD
         - name: ES_JAVA_OPTS
           value: "-Xms512m -Xmx512m"
         ports:
