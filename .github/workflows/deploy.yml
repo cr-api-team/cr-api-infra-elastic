@@ -1,0 +1,32 @@
+name: Deploy Elasticsearch Infra
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GKE_CLUSTER: cr-api-cluster
+  GKE_ZONE: us-central1
+
+jobs:
+  deploy:
+    name: Deploy to GKE
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
+
+      - uses: 'google-github-actions/get-gke-credentials@v1'
+        with:
+          cluster_name: '${{ env.GKE_CLUSTER }}'
+          location: '${{ env.GKE_ZONE }}'
+
+      - name: Deploy
+        run: |-
+          kubectl apply -f elasticsearch.yaml
