@@ -35,6 +35,10 @@ spec:
             secretKeyRef:
               name: elasticsearch-secrets
               key: ELASTIC_PASSWORD
+        - name: SERVER_BASEPATH
+          value: "/kibana"
+        - name: SERVER_REWRITEBASEPATH
+          value: "true"
         ports:
         - containerPort: 5601
           name: ui
